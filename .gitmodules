@@ -1,0 +1,3 @@
+[submodule "3rdparty/Xli"]
+	path = 3rdparty/Xli
+	url = ../../Outracks/Xli.git
