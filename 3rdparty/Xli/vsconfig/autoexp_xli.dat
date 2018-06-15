@@ -1,0 +1,87 @@
+; Append contents of this file to your Visual Studio autoexp.dat
+; Location: <Visual Studio Folder>\Common7\Packages\Debugger
+
+;------------------------------------------------------------------------------
+;  Xli Types
+;------------------------------------------------------------------------------
+
+Xli::Managed<*>=<object>
+
+Xli::String{
+	preview 		([$e.data,s])
+	stringview		([$e.data,sb])
+}
+
+Xli::Utf16String{
+	preview 		([$e.data,su])
+	stringview		([$e.data,su])
+}
+
+Xli::Array<*>{
+	children
+	(
+		#array
+		(
+			expr :		($e.data)[$i],
+			size :		$e.used
+		)
+	)
+	preview
+	(
+		#(
+			"[", $e.used , "](",
+			#array
+			(
+				expr :	($e.data)[$i],
+				size :	$e.used
+			),
+			")"
+		)
+	)
+}
+
+Xli::HashBucket<*>{
+	preview
+	(
+		#(
+			" ", [$e.Key,d], "=", [$e.Value,d]
+		)
+	)
+}
+
+Xli::HashMap<*>{
+	children
+	(
+		#array
+		(
+			expr :	$c.buckets[$i],
+			size :	$c.bucketCount
+		) : #(
+			#array 
+			(
+				expr: &$e,
+				size: $e.State == 1,
+			): $e 
+		)
+	)
+	preview
+	(
+		#(
+			"[", $c.count, "] (",
+			#(
+				#array
+				(
+					expr :	$c.buckets[$i],
+					size :	$c.bucketCount
+				) : #(
+					#array 
+					(
+						expr: &$e,
+						size: $e.State == 1,
+					): $e
+				)
+			),
+			" )"
+		)
+	)
+}
