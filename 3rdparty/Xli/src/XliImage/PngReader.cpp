@@ -22,6 +22,7 @@
 #include <XliImage/Png.h>
 #include <XliImage/ImageReader.h>
 #include <png.h>
+#include <string.h>
 
 namespace Xli
 {
